@@ -1,9 +1,11 @@
 
 using Graphs
 using CSV
+using YAML
 using DataFrames
 using ArgParse
 using Serialization
+using Dates, DateFormats
 
 
 include("src/Graphs.jl")
@@ -20,8 +22,8 @@ function parse_commandline()
 
         "--path-model"
             help = "path to the train model"
-        "--text"
-            help = "farsi text to be transliterated"
+        #"--flow-name"
+        #    help = "brain name to be ran"
 
     end
 
@@ -37,20 +39,27 @@ parsedArgs = parse_commandline()
 # load brain data
 data = deserialize(parsedArgs["path-model"])
 
+
+stateData = YAML.load_file("data/state-data.yml")
+
+
+# Build data
 entryBrain = data[:entry]
 dicBRAINS = data[:dicBrains]
 df_Nodes = data[:df_Nodes]
 graph = dicBRAINS[entryBrain]
 
 
-data = Dict{String, Any}(
+stateData = stateData[entryBrain]
+#===
+Dict{String, Any}(
             "txt" => parsedArgs["text"],
             "state" => nothing, # used for messages back to system
             "brain" => entryBrain)
-
+===#
 
 # run agent
-runAgent(graph, dicBRAINS, df_Nodes, data) |>
+runAgent(graph, dicBRAINS, df_Nodes, stateData) |>
     println
 
 

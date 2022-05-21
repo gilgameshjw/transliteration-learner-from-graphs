@@ -77,7 +77,7 @@ Build single file or from a dir:
 # build from file
 >julia train.jl --path-lucidchart-csv resources/FullDemo.csv --brain-entry transliteration --path-model resources/FullDemo.dat
 # build from dir
-> julia train.jl --dir-path-lucidchart-csv resources/modelDir/ --brain-entry transliteration --path-model resources/DirDemo.dat
+> julia train.jl --dir-path-lucidchart-csv resources/ChrisAlgo/ --brain-entry processpricedata --path-model resources/ProcessPriceData.dat
 ----
 
 ==== Run DBG mode
